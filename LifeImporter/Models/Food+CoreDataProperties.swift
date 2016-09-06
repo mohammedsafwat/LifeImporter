@@ -12,4 +12,5 @@ import CoreData
 extension Food {
     @NSManaged var title : String?
     @NSManaged var category : Category?
+    @NSManaged var calories : Int16
 }
