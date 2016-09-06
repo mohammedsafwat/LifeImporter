@@ -14,35 +14,48 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ldl-aZ-87n" userLabel="ContainerView">
+                        <rect key="frame" x="7" y="3" width="306" height="57.5"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbe-Yu-c0H" userLabel="MainOptionIconBackgroundImageView">
+                                <rect key="frame" x="8" y="7" width="45" height="45"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Food" translatesAutoresizingMaskIntoConstraints="NO" id="enL-55-Rh0" userLabel="MainOptionIconImageView">
+                                        <rect key="frame" x="8" y="10" width="30" height="25"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.76078431369999999" green="0.88235294119999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="HRr-4N-uwF"/>
+                                    <constraint firstAttribute="width" constant="45" id="WRk-Hj-gPj"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gbe-Yu-c0H" firstAttribute="leading" secondItem="ldl-aZ-87n" secondAttribute="leading" constant="8" id="5rS-oP-ekY"/>
+                            <constraint firstItem="gbe-Yu-c0H" firstAttribute="centerY" secondItem="ldl-aZ-87n" secondAttribute="centerY" id="QzT-1x-gRC"/>
+                        </constraints>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUa-gj-MGE" userLabel="MainOptionTitleLabel">
-                        <rect key="frame" x="69" y="21" width="243" height="21"/>
-                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="17"/>
+                        <rect key="frame" x="69" y="21.5" width="243" height="20"/>
+                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbe-Yu-c0H" userLabel="MainOptionIconBackgroundImageView">
-                        <rect key="frame" x="8" y="10" width="45" height="45"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Food" translatesAutoresizingMaskIntoConstraints="NO" id="enL-55-Rh0" userLabel="MainOptionIconImageView">
-                                <rect key="frame" x="8" y="10" width="30" height="25"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.76078431369999999" green="0.88235294119999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="45" id="HRr-4N-uwF"/>
-                            <constraint firstAttribute="width" constant="45" id="WRk-Hj-gPj"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="vUa-gj-MGE" firstAttribute="leading" secondItem="gbe-Yu-c0H" secondAttribute="trailing" constant="16" id="7KH-8T-mgv"/>
-                    <constraint firstItem="gbe-Yu-c0H" firstAttribute="centerY" secondItem="feS-oG-fCr" secondAttribute="centerY" id="7sm-Qe-tTr"/>
+                    <constraint firstAttribute="trailing" secondItem="ldl-aZ-87n" secondAttribute="trailing" constant="7" id="B8f-5F-Chm"/>
+                    <constraint firstAttribute="trailing" secondItem="vUa-gj-MGE" secondAttribute="trailing" constant="8" id="FaI-b8-Bs9"/>
+                    <constraint firstAttribute="bottom" secondItem="ldl-aZ-87n" secondAttribute="bottom" constant="3" id="L7c-0F-MHA"/>
                     <constraint firstItem="vUa-gj-MGE" firstAttribute="centerY" secondItem="feS-oG-fCr" secondAttribute="centerY" id="OEY-sK-U88"/>
-                    <constraint firstItem="gbe-Yu-c0H" firstAttribute="leading" secondItem="feS-oG-fCr" secondAttribute="leading" constant="8" id="XbR-p0-LNU"/>
-                    <constraint firstAttribute="trailing" secondItem="vUa-gj-MGE" secondAttribute="trailing" constant="8" id="YK7-pZ-pxe"/>
+                    <constraint firstItem="ldl-aZ-87n" firstAttribute="leading" secondItem="feS-oG-fCr" secondAttribute="leading" constant="7" id="RV8-7m-SJM"/>
+                    <constraint firstItem="vUa-gj-MGE" firstAttribute="leading" secondItem="gbe-Yu-c0H" secondAttribute="trailing" constant="9" id="XXc-Jq-DPm"/>
+                    <constraint firstItem="ldl-aZ-87n" firstAttribute="top" secondItem="feS-oG-fCr" secondAttribute="top" constant="3" id="zfu-J1-WHK"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="containerView" destination="ldl-aZ-87n" id="ELK-Sh-o4q"/>
                 <outlet property="mainOptionIconBackgroundImageView" destination="gbe-Yu-c0H" id="leD-rw-UbJ"/>
                 <outlet property="mainOptionIconImageView" destination="enL-55-Rh0" id="AJG-kJ-jsJ"/>
                 <outlet property="mainOptionTitleLabel" destination="vUa-gj-MGE" id="Bzd-Sj-h0D"/>
