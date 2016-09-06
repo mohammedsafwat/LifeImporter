@@ -23,7 +23,7 @@
     </entity>
     <entity name="Exercise" representedClassName=".Exercise" syncable="YES">
         <attribute name="addedbyuser" attributeType="Boolean" syncable="YES"/>
-        <attribute name="calories" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="calories" attributeType="Integer 16" defaultValueString="0.0" syncable="YES"/>
         <attribute name="custom" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="deleted" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="downloaded" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
