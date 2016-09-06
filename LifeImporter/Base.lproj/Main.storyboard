@@ -40,7 +40,6 @@
         <!--Search Scene View Controller-->
         <scene sceneID="OkP-WC-PNX">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="REV-YZ-I1w" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="vgP-8k-gEK" customClass="SearchSceneViewController" customModule="LifeImporter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m0J-Uc-alp"/>
@@ -54,7 +53,7 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5uU-ds-6Sa">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5uU-ds-6Sa">
                                 <rect key="frame" x="0.0" y="108" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
@@ -75,6 +74,7 @@
                         <outlet property="searchResultsTableView" destination="5uU-ds-6Sa" id="06M-rN-gdu"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="REV-YZ-I1w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1168" y="108"/>
         </scene>
