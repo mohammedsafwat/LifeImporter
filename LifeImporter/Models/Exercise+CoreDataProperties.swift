@@ -11,4 +11,5 @@ import CoreData
 
 extension Exercise {
     @NSManaged var title : String?
+    @NSManaged var calories : Int16
 }
