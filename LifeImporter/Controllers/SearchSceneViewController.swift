@@ -16,18 +16,27 @@ class SearchSceneViewController: CoreDataViewController, UISearchBarDelegate, UI
     
     var homeScreenOptionType : AppSharedData.HomeScreenOptionType?
     private var numberOfReturnedSearchResults : Int = 0
-    private var searchResults = [NSManagedObject]()
+    var filteredSearchResults = [AnyObject]?()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSearchBar()
         configureSearchResultsTableView()
         registerSearchResultsTableViewCellCustomNib()
-        fetchResultsFromCoreData()
+        fetchResultsFromCoreData { (error) in
+            if (error != nil) {
+                UICommonActions.sharedInstance.showAlertView("Error", message: "It seems that something went wrong while fetching search results", navigationController: self.navigationController)
+            } else {
+                self.searchBar.userInteractionEnabled = true
+            }
+        }
     }
+    
+    // MARK: - UI Configuration
     
     private func configureSearchBar() {
         searchBar.delegate = self
+        searchBar.userInteractionEnabled = false
         if let homeScreenOptionType = self.homeScreenOptionType {
             if let homeScreenOptionName = AppSharedData.sharedInstance.homeScreenOptionsStringNames[homeScreenOptionType] {
                 searchBar.placeholder = "Search for " + homeScreenOptionName
@@ -38,11 +47,14 @@ class SearchSceneViewController: CoreDataViewController, UISearchBarDelegate, UI
     private func configureSearchResultsTableView() {
         searchResultsTableView.delegate = self
         searchResultsTableView.dataSource = self
+        searchResultsTableView.tableFooterView = UIView()
     }
     
     private func registerSearchResultsTableViewCellCustomNib() {
         searchResultsTableView.registerNib(UINib(nibName: "SearchResultsTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchResultsTableViewCell")
     }
+    
+    // MARK: - Core Data Helper Methods
     
     private func getCoreDataStack() -> CoreDataStack? {
         // Get the Core Data Stack
@@ -50,7 +62,7 @@ class SearchSceneViewController: CoreDataViewController, UISearchBarDelegate, UI
         return delegate.stack
     }
     
-    private func fetchResultsFromCoreData() {
+    private func fetchResultsFromCoreData(fetchResultsCompletionHandler completionHandler: (error : NSError?) -> Void) {
         // Create a fetch request
         if let homeScreenOptionType = self.homeScreenOptionType {
             if let homeScreenOptionEntityName = AppSharedData.sharedInstance.homeScreenOptionsEntityNames[homeScreenOptionType] {
@@ -59,22 +71,61 @@ class SearchSceneViewController: CoreDataViewController, UISearchBarDelegate, UI
                 
                 if let coreDataStack = getCoreDataStack() {
                     fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+                    completionHandler(error: nil)
+                } else {
+                    let userInfo = [NSLocalizedDescriptionKey : NSLocalizedString("An error happened while fetching results from CoreData.", comment: "")]
+                    let error = NSError(domain: "LifeImporterErrorDomain", code: -57, userInfo: userInfo)
+                    completionHandler(error: error)
                 }
             }
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
+    // MARK: - UISerchBar delegate
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        
+        filterSearchResults(searchText)
+        searchResultsTableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        filterSearchResults(searchBar.text)
+        searchResultsTableView.reloadData()
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
+    }
+    
+    // MARK: - Search methods
+    private func filterSearchResults(inputSearchText : String?) {
+        if let searchText = inputSearchText {
+            if self.homeScreenOptionType == .Food {
+                filteredSearchResults = fetchedResultsController?.fetchedObjects?.filter({ (food : AnyObject) -> Bool in
+                    let _food = food as? Food
+                    return _food?.title?.containsString(searchText) == true
+                })
+            } else if self.homeScreenOptionType == .Exercise {
+                filteredSearchResults = fetchedResultsController?.fetchedObjects?.filter({ (exercise : AnyObject) -> Bool in
+                    let _exercise = exercise as? Exercise
+                    return _exercise?.title?.containsString(searchText) == true
+                })
+            } else if self.homeScreenOptionType == .Category {
+                filteredSearchResults = fetchedResultsController?.fetchedObjects?.filter({ (category : AnyObject) -> Bool in
+                    let _category = category as? Category
+                    return _category?.category?.containsString(searchText) == true
+                })
+            }
+        }
     }
     
     // MARK: - Search Results Table view data source
@@ -84,8 +135,8 @@ class SearchSceneViewController: CoreDataViewController, UISearchBarDelegate, UI
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let fc = fetchedResultsController {
-            return fc.sections![section].numberOfObjects;
+        if let searchResults = filteredSearchResults {
+            return searchResults.count
         } else {
             return 0
         }
@@ -94,16 +145,19 @@ class SearchSceneViewController: CoreDataViewController, UISearchBarDelegate, UI
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchResultsTableViewCell", forIndexPath: indexPath) as! SearchResultsTableViewCell
         if self.homeScreenOptionType == .Food {
-            if let searchResult = fetchedResultsController?.objectAtIndexPath(indexPath) as? Food {
+            if let searchResult = filteredSearchResults?[indexPath.row] as? Food {
                 cell.searchResultTitleLabel.text = searchResult.title
+                cell.searchResultDetailsLabel.text = String(searchResult.calories) + " cal"
             }
         } else if self.homeScreenOptionType == .Exercise {
-            if let searchResult = fetchedResultsController?.objectAtIndexPath(indexPath) as? Exercise {
+            if let searchResult = filteredSearchResults?[indexPath.row] as? Exercise {
                 cell.searchResultTitleLabel.text = searchResult.title
+                cell.searchResultDetailsLabel.text = String(searchResult.calories) + " cal"
             }
         } else if self.homeScreenOptionType == .Category {
-            if let searchResult = fetchedResultsController?.objectAtIndexPath(indexPath) as? Category {
+            if let searchResult = filteredSearchResults?[indexPath.row] as? Category {
                 cell.searchResultTitleLabel.text = searchResult.category
+                cell.searchResultDetailsLabel.text = "id: " + String(searchResult.headcategoryid)
             }
         }
         return cell
@@ -115,14 +169,11 @@ class SearchSceneViewController: CoreDataViewController, UISearchBarDelegate, UI
         return AppSharedData.sharedInstance.heightForTableViewRow
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-    */
-
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 }
