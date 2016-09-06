@@ -5,5 +5,4 @@ The application now contains three entites, for "Food", "Exercise" and "Category
 
 # Installing needed tools to run the application
 ### CocoaPods
-If you don't have CocoaPods installed already, (check this link) [https://guides.cocoapods.org/using/getting-started.html]
-After you install CocoaPods, go to your terminal, cd to the project's directory and run `pod install`. Then, open the .xcworkspace file.
+If you don't have CocoaPods installed already, (check this link) [https://guides.cocoapods.org/using/getting-started.html]. After you install CocoaPods, go to your terminal then cd to the project's directory and run `pod install`. Then, open the .xcworkspace file.
