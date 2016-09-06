@@ -12,4 +12,5 @@ import CoreData
 extension Category {
     @NSManaged var category : String?
     @NSManaged var food : Food?
+    @NSManaged var headcategoryid : Int16
 }
