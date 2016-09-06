@@ -26,4 +26,6 @@ class AppSharedData: NSObject {
     let homeScreenOptionsEntityNames : [HomeScreenOptionType : String] = [.Food : "Food", .Exercise : "Exercise", .Category : "Category"]
 
     let heightForTableViewRow : CGFloat = 64.0
+    
+    let paddingOnTopOfMainSceneTableView : CGFloat = 3.0
 }
