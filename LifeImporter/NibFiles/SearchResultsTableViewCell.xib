@@ -14,19 +14,27 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czv-P8-Rff" userLabel="SearchResultTitleLabel">
-                        <rect key="frame" x="8" y="8" width="304" height="21"/>
-                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czv-P8-Rff" userLabel="SearchResultTitleLabel">
+                        <rect key="frame" x="8" y="8" width="304" height="20"/>
+                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7FE-dy-Okm" userLabel="SearchResultDetailsLabel">
-                        <rect key="frame" x="8" y="37" width="42" height="21"/>
-                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="12"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7FE-dy-Okm" userLabel="SearchResultDetailsLabel">
+                        <rect key="frame" x="8" y="44" width="304" height="14"/>
+                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="czv-P8-Rff" firstAttribute="top" secondItem="rWX-QT-nDc" secondAttribute="top" constant="8" id="6xq-c6-kDn"/>
+                    <constraint firstAttribute="trailing" secondItem="7FE-dy-Okm" secondAttribute="trailing" constant="8" id="Gl5-Jt-kwH"/>
+                    <constraint firstAttribute="bottom" secondItem="7FE-dy-Okm" secondAttribute="bottom" constant="5.5" id="Y67-os-UyM"/>
+                    <constraint firstAttribute="trailing" secondItem="czv-P8-Rff" secondAttribute="trailing" constant="8" id="Y7K-G9-HyH"/>
+                    <constraint firstItem="czv-P8-Rff" firstAttribute="leading" secondItem="rWX-QT-nDc" secondAttribute="leading" constant="8" id="nVq-bI-uLE"/>
+                    <constraint firstItem="7FE-dy-Okm" firstAttribute="leading" secondItem="rWX-QT-nDc" secondAttribute="leading" constant="8" id="sFa-4P-Zr6"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="searchResultDetailsLabel" destination="7FE-dy-Okm" id="yvd-JQ-eUd"/>
