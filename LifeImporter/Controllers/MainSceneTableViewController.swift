@@ -64,6 +64,7 @@ class MainSceneTableViewController: UITableViewController {
     private func styleTableView() {
         self.view.backgroundColor = UIColor(red: 242.0/255.0, green: 241.0/255.0, blue: 239.0/255.0, alpha: 1.0)
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: AppSharedData.sharedInstance.paddingOnTopOfMainSceneTableView))
     }
     
     override func didReceiveMemoryWarning() {
