@@ -12,15 +12,18 @@ class MainSceneTableViewCell: UITableViewCell {
     @IBOutlet weak var mainOptionTitleLabel: UILabel!
     @IBOutlet weak var mainOptionIconBackgroundImageView: UIView!
     @IBOutlet weak var mainOptionIconImageView: UIImageView!
+    @IBOutlet weak var containerView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        self.layer.cornerRadius = 5;
-
-        self.layer.shadowOffset = CGSizeMake(-1, 1)
-        self.layer.shadowOpacity = 0.5
         
+        self.selectionStyle = UITableViewCellSelectionStyle.None
+        self.backgroundColor = UIColor.clearColor()
+        
+        containerView.layer.cornerRadius = 5;
+        containerView.layer.shadowOffset = CGSizeMake(-0.5, 0.5)
+        containerView.layer.shadowOpacity = 0.1
+        containerView.layer.borderColor = UIColor(red: 128.0/255.0, green: 128.0/255.0, blue: 128.0/255.0, alpha: 1.0).CGColor
         mainOptionIconBackgroundImageView.layer.cornerRadius = 21;
         mainOptionIconBackgroundImageView.layer.masksToBounds = true;
         mainOptionIconBackgroundImageView.backgroundColor = UIColor(red: 242.0/255.0, green: 241.0/255.0, blue: 239.0/255.0, alpha: 1.0)
