@@ -11,7 +11,7 @@ import CoreData
 struct CoreDataStack {
     private let managedObjectModel : NSManagedObjectModel
     private let persistentStoreCoordinator : NSPersistentStoreCoordinator
-    private let mainContext : NSManagedObjectContext
+    let mainContext : NSManagedObjectContext
     private let backgroundContext : NSManagedObjectContext
     private let modelUrl : NSURL
     private let dbUrl : NSURL
@@ -55,15 +55,32 @@ struct CoreDataStack {
         dbUrl = docUrl.URLByAppendingPathComponent("model.sqlite")
         
         do {
-            try persistentStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: dbUrl, options: nil)
+            try addStoreCoordinator(NSSQLiteStoreType, configuration: nil, storeURL: self.dbUrl, options: nil)
         } catch {
             print("Unable to add persistent store coordinator with url \(dbUrl)")
         }
+    }
+    
+    // MARK:  - Utils
+    func addStoreCoordinator(storeType: String,
+                             configuration: String?,
+                             storeURL: NSURL,
+                             options : [NSObject : AnyObject]?) throws{
+        
+        try self.persistentStoreCoordinator.addPersistentStoreWithType(storeType, configuration: configuration, URL: storeURL, options: options)
+        
     }
 }
 
 // MARK: - Removing data
 
+extension CoreDataStack {
+    func dropAllData() throws {
+        try self.persistentStoreCoordinator.destroyPersistentStoreAtURL(self.dbUrl, withType:NSSQLiteStoreType , options: nil)
+        
+        try addStoreCoordinator(NSSQLiteStoreType, configuration: nil, storeURL: self.dbUrl, options: nil)
+    }
+}
 
 // MARK: - Batch processing in the background
 extension CoreDataStack {
@@ -75,8 +92,22 @@ extension CoreDataStack {
             
             do {
                 try self.backgroundContext.save()
+                try self.mainContext.save()
             } catch {
                 fatalError("An error happened while trying to save the backgroundContext: \(error)")
+            }
+        }
+    }
+}
+
+// MARK: - Save
+extension CoreDataStack {
+    func save() {
+        self.mainContext.performBlock() {
+            do {
+                try self.mainContext.save()
+            } catch {
+                fatalError("An error happend while saving main context: \(error)")
             }
         }
     }
